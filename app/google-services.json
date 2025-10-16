@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "671932875305",
+    "project_id": "edufin-ai-cloud",
+    "storage_bucket": "edufin-ai-cloud.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671932875305:android:7563d6de5d92f4336e5238",
+        "android_client_info": {
+          "package_name": "com.example.edufin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz2ZrOcw8KBdTGdghdD1v14dPJLiU4LW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671932875305:android:32054ee62fd28b556e5238",
+        "android_client_info": {
+          "package_name": "com.example.edufinmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz2ZrOcw8KBdTGdghdD1v14dPJLiU4LW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671932875305:android:237e2764ab49caaa6e5238",
+        "android_client_info": {
+          "package_name": "com.example.estudoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz2ZrOcw8KBdTGdghdD1v14dPJLiU4LW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
