@@ -19,54 +19,91 @@
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
+        <!-- 💰 Renda -->
+        <TextView
+            android:text="💰 Renda mensal (R$)"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/inputRenda"
-            android:hint="💰 Renda mensal (R$)"
+            android:hint="Digite sua renda"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"/>
 
+        <!-- 💳 Gastos -->
+        <TextView
+            android:text="💳 Gastos mensais (R$)"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/inputGastos"
-            android:hint="💳 Gastos mensais (R$)"
+            android:hint="Digite seus gastos"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"/>
 
+        <!-- 📉 Dívidas -->
+        <TextView
+            android:text="📉 Dívidas (R$)"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/inputDividas"
-            android:hint="📉 Dívidas (R$)"
+            android:hint="Digite suas dívidas"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"/>
 
+        <!-- 🏦 Poupança -->
+        <TextView
+            android:text="🏦 Poupança (R$)"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/inputPoupanca"
-            android:hint="🏦 Poupança (R$)"
+            android:hint="Digite sua poupança"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"/>
 
+        <!-- 🎂 Idade -->
+        <TextView
+            android:text="🎂 Idade"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/inputIdade"
-            android:hint="🎂 Idade"
+            android:hint="Digite sua idade"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"/>
 
+        <!-- 📈 Investimentos -->
+        <TextView
+            android:text="📈 Investimentos (R$)"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/inputInvestimentos"
-            android:hint="📈 Investimentos (R$)"
+            android:hint="Digite seus investimentos"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"/>
 
+        <!-- Botão para IA -->
         <Button
             android:id="@+id/btnAtualizar"
             android:text="🔁 Atualizar e Recalcular"
@@ -74,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"/>
 
+        <!-- Resultado -->
         <TextView
             android:id="@+id/textViewResultado"
             android:text="Resultado IA: -"
@@ -84,6 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <!-- Logout -->
         <Button
             android:id="@+id/btnLogout"
             android:text="🚪 Sair da conta"
