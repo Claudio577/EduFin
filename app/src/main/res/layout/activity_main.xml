@@ -1,24 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+    android:padding="20dp">
 
-    <TextView
-        android:id="@+id/textViewDados"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Carregando dados..."
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:layout_marginBottom="24dp"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sair da conta"
-        android:padding="12dp" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/textViewTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💡 EduFin — Saúde Financeira"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/inputRenda"
+            android:hint="💰 Renda mensal (R$)"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/inputGastos"
+            android:hint="💳 Gastos mensais (R$)"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/inputDividas"
+            android:hint="📉 Dívidas (R$)"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/inputPoupanca"
+            android:hint="🏦 Poupança (R$)"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/inputIdade"
+            android:hint="🎂 Idade"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/inputInvestimentos"
+            android:hint="📈 Investimentos (R$)"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnAtualizar"
+            android:text="🔁 Atualizar e Recalcular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/textViewResultado"
+            android:text="Resultado IA: -"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:text="🚪 Sair da conta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,10 +1,12 @@
 package com.example.estudoapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,6 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var predictor: FinancialHealthPredictor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,56 +23,86 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
-        val db = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
+        predictor = FinancialHealthPredictor(this)
 
-        val textView = findViewById<TextView>(R.id.textViewDados)
-        val btnLogout = findViewById<Button>(R.id.btnLogout)
-
-        // Pega o e-mail do usuário logado
         val userEmail = auth.currentUser?.email
+        val btnLogout = findViewById<Button>(R.id.btnLogout)
+        val btnAtualizar = findViewById<Button>(R.id.btnAtualizar)
+        val textViewResultado = findViewById<TextView>(R.id.textViewResultado)
 
-        if (userEmail != null) {
-            // 🔹 Agora acessamos direto o documento "usuarios"
-            db.collection("usuarios")
-                .document("usuarios")
-                .get()
-                .addOnSuccessListener { doc ->
-                    if (doc.exists()) {
-                        val renda = doc.getLong("renda") ?: 0
-                        val gastos = doc.getLong("gastos") ?: 0
-                        val dividas = doc.getLong("dividas") ?: 0
-                        val investimentos = doc.getLong("investimentos") ?: 0
-                        val poupanca = doc.getLong("poupanca") ?: 0
-                        val idade = doc.getLong("idade") ?: 0
-                        val resultado = doc.getString("resultado") ?: "N/A"
-                        val email = doc.getString("email") ?: "N/A"
+        val rendaInput = findViewById<EditText>(R.id.inputRenda)
+        val gastosInput = findViewById<EditText>(R.id.inputGastos)
+        val dividasInput = findViewById<EditText>(R.id.inputDividas)
+        val poupancaInput = findViewById<EditText>(R.id.inputPoupanca)
+        val idadeInput = findViewById<EditText>(R.id.inputIdade)
+        val investimentosInput = findViewById<EditText>(R.id.inputInvestimentos)
 
-                        textView.text = """
-                            Email: $email
-                            Idade: $idade
-                            Renda: R$$renda
-                            Gastos: R$$gastos
-                            Dívidas: R$$dividas
-                            Investimentos: R$$investimentos
-                            Poupança: R$$poupanca
-                            Resultado: $resultado
-                        """.trimIndent()
-                    } else {
-                        textView.text = "Nenhum dado encontrado no Firestore."
-                    }
-                }
-                .addOnFailureListener {
-                    textView.text = "Erro ao carregar dados: ${it.message}"
-                }
-        } else {
-            textView.text = "Nenhum usuário logado."
+        if (userEmail == null) {
+            Toast.makeText(this, "Nenhum usuário logado!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
         }
 
-        // Botão de logout
+        // 🔹 Carregar dados do usuário logado
+        db.collection("usuarios")
+            .document("usuarios")
+            .get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists()) {
+                    rendaInput.setText(doc.getLong("renda")?.toString() ?: "")
+                    gastosInput.setText(doc.getLong("gastos")?.toString() ?: "")
+                    dividasInput.setText(doc.getLong("dividas")?.toString() ?: "")
+                    poupancaInput.setText(doc.getLong("poupanca")?.toString() ?: "")
+                    idadeInput.setText(doc.getLong("idade")?.toString() ?: "")
+                    investimentosInput.setText(doc.getLong("investimentos")?.toString() ?: "")
+                    textViewResultado.text = "Resultado atual: ${doc.getString("resultado") ?: "N/A"}"
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao carregar dados: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+
+        // 🔹 Atualizar dados e salvar no Firestore
+        btnAtualizar.setOnClickListener {
+            val renda = rendaInput.text.toString().toFloatOrNull() ?: 0f
+            val gastos = gastosInput.text.toString().toFloatOrNull() ?: 0f
+            val dividas = dividasInput.text.toString().toFloatOrNull() ?: 0f
+            val poupanca = poupancaInput.text.toString().toFloatOrNull() ?: 0f
+            val idade = idadeInput.text.toString().toFloatOrNull() ?: 0f
+            val investimentos = investimentosInput.text.toString().toFloatOrNull() ?: 0f
+
+            val resultadoIA = predictor.predict(
+                renda, gastos, dividas, poupanca, idade, investimentos
+            )
+
+            textViewResultado.text = "Resultado IA: $resultadoIA"
+
+            val userDoc = db.collection("usuarios").document("usuarios")
+            val dadosAtualizados = hashMapOf(
+                "renda" to renda.toInt(),
+                "gastos" to gastos.toInt(),
+                "dividas" to dividas.toInt(),
+                "poupanca" to poupanca.toInt(),
+                "idade" to idade.toInt(),
+                "investimentos" to investimentos.toInt(),
+                "resultado" to resultadoIA
+            )
+
+            userDoc.update(dadosAtualizados as Map<String, Any>)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Dados atualizados com sucesso!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Erro ao salvar dados: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        // 🔹 Botão de logout
         btnLogout.setOnClickListener {
             auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }
